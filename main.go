@@ -183,4 +183,87 @@ func main() {
 			i+1, tc.name, tc.list1, tc.list2, result, status)
 	}
 
+	// 测试爬楼梯算法
+	fmt.Println("\n=== 爬楼梯测试 ===")
+
+	// 爬楼梯问题：每次可以爬1阶或2阶，问有多少种方法爬到n阶
+	climbStairsTestCases := []struct {
+		n        int
+		expected int
+		methods  []string
+	}{
+		{
+			n:        0,
+			expected: 0,
+			methods:  []string{},
+		},
+		{
+			n:        1,
+			expected: 1,
+			methods:  []string{"1"},
+		},
+		{
+			n:        2,
+			expected: 2,
+			methods:  []string{"1+1", "2"},
+		},
+		{
+			n:        3,
+			expected: 3,
+			methods:  []string{"1+1+1", "1+2", "2+1"},
+		},
+		{
+			n:        4,
+			expected: 5,
+			methods:  []string{"1+1+1+1", "1+1+2", "1+2+1", "2+1+1", "2+2"},
+		},
+		{
+			n:        5,
+			expected: 8,
+			methods:  []string{"1+1+1+1+1", "1+1+1+2", "1+1+2+1", "1+2+1+1", "1+2+2", "2+1+1+1", "2+1+2", "2+2+1"},
+		},
+		{
+			n:        10,
+			expected: 89,
+			methods:  []string{"(太多方法，略)..."},
+		},
+	}
+
+	fmt.Println("测试爬楼梯算法（动态规划版）:")
+	for i, tc := range climbStairsTestCases {
+		result := algorithm.ClimbStairs(tc.n)
+		status := "✓"
+		if result != tc.expected {
+			status = "✗"
+		}
+
+		// 显示部分方法，避免输出太长
+		methodsStr := ""
+		if len(tc.methods) <= 3 {
+			for j, method := range tc.methods {
+				if j > 0 {
+					methodsStr += ", "
+				}
+				methodsStr += method
+			}
+		} else {
+			methodsStr = tc.methods[0] + ", " + tc.methods[1] + ", ... (共" + fmt.Sprintf("%d", len(tc.methods)) + "种)"
+		}
+
+		fmt.Printf("Test %d: n=%-2d → 方法数=%-3d %s (预期:%d) %s\n",
+			i+1, tc.n, result, methodsStr, tc.expected, status)
+	}
+
+	fmt.Println("\n📊 斐波那契数列规律:")
+	fmt.Printf("f(1)=1, f(2)=2, f(3)=3, f(4)=5, f(5)=8, f(6)=13, f(7)=21, f(8)=34, f(9)=55, f(10)=89\n")
+	fmt.Println("每一项 = 前两项之和，这就是斐波那契数列！")
+
+	fmt.Println("\n🎯 算法思想:")
+	fmt.Println("1. 递归关系：f(n) = f(n-1) + f(n-2)")
+	fmt.Println("2. 为什么要加？因为到第n阶有两种方式:")
+	fmt.Println("   - 从第n-1阶爬1步")
+	fmt.Println("   - 从第n-2阶爬2步")
+	fmt.Println("3. 边界条件：f(0)=0, f(1)=1, f(2)=2")
+	fmt.Println("4. 时间复杂度：O(n)，空间复杂度：O(1)")
+
 }
