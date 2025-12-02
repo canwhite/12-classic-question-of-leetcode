@@ -6,7 +6,7 @@ func IsValid(s string) bool {
     // 使用栈来匹配括号
     stack := make([]rune, 0)
 
-    // 定义括号映射关系
+    // 定义括号映射关系，以我们的目的为映射关系
     pairs := map[rune]rune{
         ')': '(',
         '}': '{',
@@ -24,11 +24,12 @@ func IsValid(s string) bool {
             }
 			//拿出栈顶
             top := stack[len(stack)-1]
+			
 			//匹配，不能成返回false
             if top != pairs[char] {
                 return false
             }
-            // 匹配成功，出栈
+            // 匹配成功，出栈，切片操作符
             stack = stack[:len(stack)-1]
         }
     }

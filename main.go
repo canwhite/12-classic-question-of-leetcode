@@ -86,4 +86,101 @@ func main() {
 			i+1, fmt.Sprintf("\"%s\"", tc.input), tc.expected, result, status)
 	}
 
+	// 测试合并两个有序链表算法
+	fmt.Println("\n=== 合并两个有序链表测试 ===")
+
+	// 辅助函数：创建链表
+	createList := func(nums []int) *algorithm.ListNode {
+		if len(nums) == 0 {
+			return nil
+		}
+		head := &algorithm.ListNode{Val: nums[0]}
+		current := head
+		for _, num := range nums[1:] {
+			current.Next = &algorithm.ListNode{Val: num}
+			current = current.Next
+		}
+		return head
+	}
+
+	// 辅助函数：打印链表
+	printList := func(head *algorithm.ListNode) []int {
+		var result []int
+		for head != nil {
+			result = append(result, head.Val)
+			head = head.Next
+		}
+		return result
+	}
+
+	mergeTestCases := []struct {
+		name     string
+		list1    []int
+		list2    []int
+		expected []int
+	}{
+		{
+			name:     "两个非空链表",
+			list1:    []int{1, 2, 4},
+			list2:    []int{1, 3, 4},
+			expected: []int{1, 1, 2, 3, 4, 4},
+		},
+		{
+			name:     "一个空链表，一个非空",
+			list1:    []int{},
+			list2:    []int{0},
+			expected: []int{0},
+		},
+		{
+			name:     "两个空链表",
+			list1:    []int{},
+			list2:    []int{},
+			expected: []int{},
+		},
+		{
+			name:     "链表1全部小于链表2",
+			list1:    []int{1, 2, 3},
+			list2:    []int{4, 5, 6},
+			expected: []int{1, 2, 3, 4, 5, 6},
+		},
+		{
+			name:     "链表2全部小于链表1",
+			list1:    []int{4, 5, 6},
+			list2:    []int{1, 2, 3},
+			expected: []int{1, 2, 3, 4, 5, 6},
+		},
+		{
+			name:     "交替排列",
+			list1:    []int{1, 3, 5},
+			list2:    []int{2, 4, 6},
+			expected: []int{1, 2, 3, 4, 5, 6},
+		},
+		{
+			name:     "长度不同的链表",
+			list1:    []int{1, 3, 5, 7},
+			list2:    []int{2, 4},
+			expected: []int{1, 2, 3, 4, 5, 7},
+		},
+	}
+
+	fmt.Println("测试合并两个有序链表算法:")
+	for i, tc := range mergeTestCases {
+		// 创建两个有序链表
+		l1 := createList(tc.list1)
+		l2 := createList(tc.list2)
+
+		// 合并链表
+		merged := algorithm.MergeTwoLists(l1, l2)
+		result := printList(merged)
+
+		// 检查结果
+		status := "✓"
+		if fmt.Sprintf("%v", result) != fmt.Sprintf("%v", tc.expected) {
+			status = "✗"
+		}
+
+		fmt.Printf("Test %d (%-25s): L1:%v L2:%v → %v %s\n",
+			i+1, tc.name, tc.list1, tc.list2, result, status)
+	}
+
 }
