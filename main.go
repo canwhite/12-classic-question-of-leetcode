@@ -266,4 +266,109 @@ func main() {
 	fmt.Println("3. 边界条件：f(0)=0, f(1)=1, f(2)=2")
 	fmt.Println("4. 时间复杂度：O(n)，空间复杂度：O(1)")
 
+	// 测试买卖股票最佳时机算法
+	fmt.Println("\n=== 买卖股票最佳时机测试 ===")
+
+	maxProfitTestCases := []struct {
+		name     string
+		prices   []int
+		expected int
+	}{
+		{
+			name:     "单调上涨",
+			prices:   []int{1, 2, 3, 4, 5},
+			expected: 4,
+		},
+		{
+			name:     "单调下跌",
+			prices:   []int{5, 4, 3, 2, 1},
+			expected: 0,
+		},
+		{
+			name:     "波动上涨",
+			prices:   []int{7, 1, 5, 3, 6, 4},
+			expected: 7,
+		},
+		{
+			name:     "多次买卖机会",
+			prices:   []int{1, 2, 3, 4, 5, 1, 2, 3, 4},
+			expected: 9,
+		},
+		{
+			name:     "单一价格",
+			prices:   []int{3, 3, 3, 3},
+			expected: 0,
+		},
+		{
+			name:     "空数组",
+			prices:   []int{},
+			expected: 0,
+		},
+	}
+
+	fmt.Println("测试动态规划解法:")
+	for i, tc := range maxProfitTestCases {
+		result := algorithm.MaxProfit(tc.prices)
+		status := "✓"
+		if result != tc.expected {
+			status = "✗"
+		}
+		fmt.Printf("Test %d (%-15s): Prices:%v → Profit:%d Expected:%d %s\n",
+			i+1, tc.name, tc.prices, result, tc.expected, status)
+	}
+
+	fmt.Println("\n测试贪心解法（无限次交易）:")
+	for i, tc := range maxProfitTestCases {
+		result := algorithm.MaxProfitUnlimited(tc.prices)
+		status := "✓"
+		if result != tc.expected {
+			status = "✗"
+		}
+		fmt.Printf("Test %d (%-15s): Prices:%v → Profit:%d Expected:%d %s\n",
+			i+1, tc.name, tc.prices, result, tc.expected, status)
+	}
+
+	fmt.Println("\n测试贪心解法（含手续费）:")
+	maxProfitFeeTestCases := []struct {
+		name     string
+		prices   []int
+		fee      int
+		expected int
+	}{
+		{
+			name:     "简单案例",
+			prices:   []int{1, 3, 2, 8, 4, 9},
+			fee:      2,
+			expected: 8,
+		},
+		{
+			name:     "手续费过高",
+			prices:   []int{1, 3, 7},
+			fee:      10,
+			expected: 0,
+		},
+		{
+			name:     "多次交易",
+			prices:   []int{1, 5, 3, 6, 4, 5, 2, 8},
+			fee:      1,
+			expected: 11,
+		},
+	}
+
+	for i, tc := range maxProfitFeeTestCases {
+		result := algorithm.MaxProfitGreedy(tc.prices, tc.fee)
+		status := "✓"
+		if result != tc.expected {
+			status = "✗"
+		}
+		fmt.Printf("Test %d (%-15s): Prices:%v Fee:%d → Profit:%d Expected:%d %s\n",
+			i+1, tc.name, tc.prices, tc.fee, result, tc.expected, status)
+	}
+
+	fmt.Println("\n🎯 买卖股票算法思想:")
+	fmt.Println("1. 动态规划：记录持股和不持股两种状态")
+	fmt.Println("2. 贪心算法：抓住每个盈利机会，设置最低买入价格")
+	fmt.Println("3. 手续费版本：只有利润超过手续费才进行交易")
+	fmt.Println("4. 时间复杂度：O(n)，空间复杂度：O(1)")
+
 }
