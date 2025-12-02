@@ -56,5 +56,34 @@ func main() {
 	reversedBetween := algorithm.ReverseBetween(anotherList, 2, 4)
 	fmt.Printf("反转第2到4个节点: %v\n", algorithm.PrintList(reversedBetween))
 
+	// 测试有效括号算法
+	fmt.Println("\n=== 有效括号测试 ===")
+
+	testCases := []struct {
+		input    string
+		expected bool
+	}{
+		{"()", true},
+		{"()[]{}", true},
+		{"(]", false},
+		{"([)]", false},
+		{"{[]}", true},
+		{"", true},
+		{"[", false},
+		{"]", false},
+		{"{[()()]}", true},
+		{"{[(])}", false},
+	}
+
+	fmt.Println("测试有效括号算法:")
+	for i, tc := range testCases {
+		result := algorithm.IsValid(tc.input)
+		status := "✓"
+		if !result {
+			status = "✗"
+		}
+		fmt.Printf("Test %d: Input: %-12s Expected: %-5v Got: %-5v %s\n",
+			i+1, fmt.Sprintf("\"%s\"", tc.input), tc.expected, result, status)
+	}
 
 }
