@@ -13,8 +13,8 @@
 
 ## 🎯 前置知识：链表与指针的魔法
 ### 区分
- * 遍历驱动
- * 递归分治
+ * 遍历驱动，这种比较容易理解
+ * 递归分治，递归分为递和归两层操作，递是洋葱圈的进，当然这期间可以分治判断，归时递归函数后边的代码
 
 ### ❓ 为什么需要先理解指针？
 
@@ -399,7 +399,7 @@ list2: [4]→nil
 // 缺点：空间复杂度较高，可能栈溢出（长链表）
 func MergeTwoListsRecursive(list1 *ListNode, list2 *ListNode) *ListNode {
     // 基础情况：如果其中一个链表为空，直接返回另一个链表
-    // 这是递归的终止条件
+    // 这是递归的终止条件，递归一般在前边判断终止回弹，
     if list1 == nil {
         return list2                  // 🏁 结束条件：没有书了，直接给另一摞
     }
@@ -408,10 +408,13 @@ func MergeTwoListsRecursive(list1 *ListNode, list2 *ListNode) *ListNode {
     }
 
     // 递归情况：比较当前节点，选择较小的作为合并结果的头节点
+    // 递归的本质是洋葱圈，不过这里用了分开判断往下走
     if list1.Val <= list2.Val {
         // 选择 list1 的当前节点，然后递归处理 list1.Next 和 list2
         // list1 的 Next 指向递归合并的结果
         list1.Next = MergeTwoListsRecursive(list1.Next, list2)
+
+        //递归分为递和归两层操作，递是洋葱圈的进，归时递归函数后边的代码
         return list1                   // 📋 我拿着最小的书，剩下的交给帮手
     } else {
         // 选择 list2 的当前节点，然后递归处理 list1 和 list2.Next
