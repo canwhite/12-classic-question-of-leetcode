@@ -13,7 +13,7 @@ func ClimbStairs(n int) int {
 
     // 从第3阶开始递推
     for i := 3; i <= n; i++ {
-		//到dp[i]的时候和前边dp组合的关系
+		//TODO:主要是dp[i]的时候和前边dp组合的关系，可以先猜，然后再验证
         dp[i] = dp[i-1] + dp[i-2]  // 斐波那契递推
     }
 
