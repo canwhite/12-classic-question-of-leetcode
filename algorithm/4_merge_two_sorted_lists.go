@@ -1,9 +1,8 @@
 package algorithm
 
-// ⚠️注意：迭代法是用循环的方式遍历
-// MergeTwoListsIterative 合并两个有序链表 - 迭代法（空间O(1)）
-// 迭代法：使用循环重复执行相同逻辑，通过循环变量控制过程
-// 优点：空间复杂度最优，无栈溢出风险
+//   3. 🔄 迭代法详解 - 循环驱动的实现
+//   4. 🌿 递归法详解 - 分治思想的实现
+//   并且理解链表的本质是指针操作，单个地址单个值，而不是一整条链
 func MergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 	// 创建一个虚拟头节点，简化边界处理
 	dummy := &ListNode{}
@@ -22,7 +21,7 @@ func MergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 		current = current.Next
 	}
 
-	// 处理剩余的节点（一个链表已经遍历完）
+	// 处理剩余的节点（一个链表已经遍历完），不一定一样长
 
 	// 剩余的节点本身就是有序的，直接连接即可
 	if list1 != nil {
