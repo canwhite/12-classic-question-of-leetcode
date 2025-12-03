@@ -466,4 +466,85 @@ func main() {
 	fmt.Println("3. 分治策略：将问题分解为左右子树的子问题")
 	fmt.Println("4. 时间复杂度：O(n)，空间复杂度：O(h) h为树高")
 
+	// 测试无重复字符最长子串算法
+	fmt.Println("\n=== 无重复字符最长子串测试 ===")
+
+	lengthOfLongestSubstringTestCases := []struct {
+		input    string
+		expected int
+	}{
+		{
+			input:    "abcabcbb",
+			expected: 3, // "abc"
+		},
+		{
+			input:    "bbbbb",
+			expected: 1, // "b"
+		},
+		{
+			input:    "pwwkew",
+			expected: 3, // "wke"
+		},
+		{
+			input:    "",
+			expected: 0, // 空字符串
+		},
+		{
+			input:    " ",
+			expected: 1, // " "
+		},
+		{
+			input:    "au",
+			expected: 2, // "au"
+		},
+		{
+			input:    "dvdf",
+			expected: 3, // "vdf"
+		},
+		{
+			input:    "anviaj",
+			expected: 5, // "nviaj"
+		},
+		{
+			input:    "tmmzuxt",
+			expected: 5, // "mzuxt"
+		},
+		{
+			input:    "abcdefghijklmnopqrstuvwxyz",
+			expected: 26, // 全部不重复
+		},
+		{
+			input:    "aaaaaaaaaa",
+			expected: 1, // 全部重复
+		},
+		{
+			input:    "abcabcbbabcabcbb",
+			expected: 3, // "abc"
+		},
+	}
+
+	fmt.Println("测试无重复字符最长子串算法:")
+	for i, tc := range lengthOfLongestSubstringTestCases {
+		result := algorithm.LengthOfLongestSubstring(tc.input)
+		status := "✓"
+		if result != tc.expected {
+			status = "✗"
+		}
+
+		inputStr := fmt.Sprintf("\"%s\"", tc.input)
+		if tc.input == "" {
+			inputStr = "(空字符串)"
+		}
+
+		fmt.Printf("Test %2d: 输入:%-15s → 长度:%2d 期望:%2d %s\n",
+			i+1, inputStr, result, tc.expected, status)
+	}
+
+	fmt.Println("\n🎯 无重复字符最长子串算法思想:")
+	fmt.Println("1. 滑动窗口：用两个指针维护一个不重复字符的窗口")
+	fmt.Println("2. 哈希表：记录字符最后一次出现的位置")
+	fmt.Println("3. 遇到重复：移动窗口左边界到重复字符的下一个位置")
+	fmt.Println("4. 时间复杂度：O(n)，每个字符只被访问一次")
+	fmt.Println("5. 空间复杂度：O(min(m,n))，m为字符集大小")
+
 }
