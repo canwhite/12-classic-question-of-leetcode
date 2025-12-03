@@ -32,6 +32,10 @@ func MaxDepthBFS(root *TreeNode) int {
         return 0
     }
 
+	/** 
+	- []*TreeNode：这是一个指针切片，专门用来存储二叉树节点的指针
+	- {root}：初始化时，切片里只有一个元素，就是根节点root
+	*/
     queue := []*TreeNode{root}
     depth := 0
 
@@ -46,7 +50,6 @@ func MaxDepthBFS(root *TreeNode) int {
 		//单层便利和往后进行
         for i := 0; i < levelSize; i++ {
 
-		
             node := queue[0]
             queue = queue[1:]
 
