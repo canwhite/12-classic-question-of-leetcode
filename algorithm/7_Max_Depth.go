@@ -13,11 +13,11 @@ func MaxDepth(root *TreeNode) int {
         return 0
     }
 
-    // 递归计算左右子树的深度
+    // 递
     leftDepth := MaxDepth(root.Left)
     rightDepth := MaxDepth(root.Right)
 
-    // 当前节点的深度 = max(左子树深度, 右子树深度) + 1
+    // 归
     if leftDepth > rightDepth {
         return leftDepth + 1
     } else {
@@ -26,31 +26,39 @@ func MaxDepth(root *TreeNode) int {
 }
 
 // 迭代解法：BFS层次遍历（可选实现）
-// func maxDepth(root *TreeNode) int {
-//     if root == nil {
-//         return 0
-//     }
+func MaxDepthBFS(root *TreeNode) int {
+	//退出机制
+    if root == nil {
+        return 0
+    }
 
-//     queue := []*TreeNode{root}
-//     depth := 0
+    queue := []*TreeNode{root}
+    depth := 0
 
-//     for len(queue) > 0 {
-//         // 处理当前层的所有节点
-//         levelSize := len(queue)
-//         depth++
+	//开始便利
+    for len(queue) > 0 {
+		
+		//为了便利
+        levelSize := len(queue)
+		//为了结果
+        depth++
 
-//         for i := 0; i < levelSize; i++ {
-//             node := queue[0]
-//             queue = queue[1:]
+		//单层便利和往后进行
+        for i := 0; i < levelSize; i++ {
 
-//             if node.Left != nil {
-//                 queue = append(queue, node.Left)
-//             }
-//             if node.Right != nil {
-//                 queue = append(queue, node.Right)
-//             }
-//         }
-//     }
+		
+            node := queue[0]
+            queue = queue[1:]
 
-//     return depth
-// }
+			//拿新的往后进行
+            if node.Left != nil {
+                queue = append(queue, node.Left)
+            }
+            if node.Right != nil {
+                queue = append(queue, node.Right)
+            }
+        }
+    }
+
+    return depth
+}
