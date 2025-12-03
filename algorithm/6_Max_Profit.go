@@ -1,7 +1,31 @@
 package algorithm
 
 //买卖股票的最佳时机含手续费，动态规划和贪心的结合应用
+func MaxProfit(prices []int) int {
+	if len(prices) == 0 {
+		return 0
+	}
 
+	// 动态规划解法：DP[i]表示第i天能获得的最大利润
+	// 状态：持股或不持股
+	hold := make([]int, len(prices))   // 持股时的最大利润
+	notHold := make([]int, len(prices)) // 不持股时的最大利润
+
+	// 初始化
+	hold[0] = -prices[0] // 第0天买入，利润为-price[0]
+	notHold[0] = 0        // 第0天不持股，利润为0
+
+	for i := 1; i < len(prices); i++ {
+		// 持股状态：要么保持持股，要么从不持股状态买入
+		hold[i] = max(hold[i-1], notHold[i-1]-prices[i])
+
+		// 不持股状态：要么保持不持股，要么从持股状态卖出
+		notHold[i] = max(notHold[i-1], hold[i-1]+prices[i])
+	}
+
+	// 最终结果必须是不持股状态（不能持有股票）
+	return notHold[len(prices)-1]
+}
 
 // 买卖股票的最佳时机含手续费，贪心解法（推荐）
 func MaxProfitGreedy(prices []int, fee int) int {

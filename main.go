@@ -371,4 +371,99 @@ func main() {
 	fmt.Println("3. 手续费版本：只有利润超过手续费才进行交易")
 	fmt.Println("4. 时间复杂度：O(n)，空间复杂度：O(1)")
 
+	// 测试二叉树最大深度算法
+	fmt.Println("\n=== 二叉树最大深度测试 ===")
+
+	// 辅助函数：创建二叉树
+	createTree := func(vals []int) *algorithm.TreeNode {
+		if len(vals) == 0 {
+			return nil
+		}
+
+		nodes := make([]*algorithm.TreeNode, len(vals))
+		for i, val := range vals {
+			if val != -1 { // -1 表示空节点
+				nodes[i] = &algorithm.TreeNode{Val: val}
+			}
+		}
+
+		for i := 0; i < len(vals); i++ {
+			if nodes[i] != nil {
+				leftIndex := 2*i + 1
+				rightIndex := 2*i + 2
+				if leftIndex < len(vals) {
+					nodes[i].Left = nodes[leftIndex]
+				}
+				if rightIndex < len(vals) {
+					nodes[i].Right = nodes[rightIndex]
+				}
+			}
+		}
+
+		return nodes[0]
+	}
+
+	maxDepthTestCases := []struct {
+		name     string
+		treeVals []int // -1 表示空节点
+		expected int
+	}{
+		{
+			name:     "空树",
+			treeVals: []int{},
+			expected: 0,
+		},
+		{
+			name:     "只有根节点",
+			treeVals: []int{1},
+			expected: 1,
+		},
+		{
+			name:     "完全二叉树",
+			treeVals: []int{1, 2, 3, 4, 5, 6, 7},
+			expected: 3,
+		},
+		{
+			name:     "左子树较深",
+			treeVals: []int{1, 2, -1, 3, -1, -1, -1, 4},
+			expected: 4,
+		},
+		{
+			name:     "右子树较深",
+			treeVals: []int{1, -1, 2, -1, -1, -1, 3},
+			expected: 3,
+		},
+		{
+			name:     "平衡二叉树",
+			treeVals: []int{3, 9, 20, -1, -1, 15, 7},
+			expected: 3,
+		},
+		{
+			name:     "单链表式树",
+			treeVals: []int{1, -1, 2, -1, -1, -1, 3},
+			expected: 3,
+		},
+	}
+
+	fmt.Println("测试二叉树最大深度算法:")
+	for i, tc := range maxDepthTestCases {
+		root := createTree(tc.treeVals)
+		result := algorithm.MaxDepth(root)
+		status := "✓"
+		if result != tc.expected {
+			status = "✗"
+		}
+
+		// 简化树的可视化显示
+		treeStr := fmt.Sprintf("%v", tc.treeVals)
+		fmt.Printf("Test %d (%-20s): Tree:%s → Depth:%d Expected:%d %s\n",
+			i+1, tc.name, treeStr, result, tc.expected, status)
+	}
+
+	fmt.Println("\n🎯 二叉树最大深度算法思想:")
+	fmt.Println("1. 递归思路：树的高度 = max(左子树高度, 右子树高度) + 1")
+	fmt.Println("2. 终止条件：空节点高度为0")
+	fmt.Println("3. 分治策略：将问题分解为左右子树的子问题")
+	fmt.Println("4. 时间复杂度：O(n)，空间复杂度：O(h) h为树高")
+
 }
