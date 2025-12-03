@@ -35,36 +35,34 @@ func Trap(height []int) int {
 // 方法2：动态规划解法
 // 思路：预处理每个位置左边和右边的最大高度，计算接水量
 // 时间复杂度：O(n)，空间复杂度：O(n)
+// 区别于状态即答案，这里的状态是辅助信息
 func Trap2(height []int) int {
-	n := len(height)
-	if n == 0 {
-		return 0
-	}
+    n := len(height)
+    if n == 0 { return 0 }
 
-	// 预处理左边最大高度
-	leftMax := make([]int, n)
-	leftMax[0] = height[0]
-	for i := 1; i < n; i++ {
-		leftMax[i] = max(leftMax[i-1], height[i])
-	}
+    // 第一维状态：左边最高
+    dpLeft := make([]int, n)
+    dpLeft[0] = height[0]
+    for i := 1; i < n; i++ {
+        dpLeft[i] = max(dpLeft[i-1], height[i])    // 状态转移
+    }
 
-	// 预处理右边最大高度
-	rightMax := make([]int, n)
-	rightMax[n-1] = height[n-1]
-	for i := n - 2; i >= 0; i-- {
-		rightMax[i] = max(rightMax[i+1], height[i])
-	}
+    // 第二维状态：右边最高
+    dpRight := make([]int, n)
+    dpRight[n-1] = height[n-1]
+    for i := n-2; i >= 0; i-- {
+        dpRight[i] = max(dpRight[i+1], height[i])  // 状态转移
+    }
 
-	// 计算每个位置的接水量
-	result := 0
-	for i := 1; i < n-1; i++ {
-		water := min(leftMax[i], rightMax[i]) - height[i] // 接水高度
-		if water > 0 {
-			result += water
-		}
-	}
-
-	return result
+    // 用状态计算答案
+    ans := 0
+    for i := 0; i < n; i++ {
+        water := min(dpLeft[i], dpRight[i]) - height[i]
+        if water > 0 {
+            ans += water
+        }
+    }
+    return ans
 }
 
 // 方法3：双指针解法
