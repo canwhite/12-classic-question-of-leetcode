@@ -26,7 +26,7 @@ func Sum(nums []int, target int) []int {
 	}
 
 	// 没有找到
-	return []int{}
+	return []int{}w
 }
 
 // 三数之和 - 减少变量，固定一个，寻找另外两个
